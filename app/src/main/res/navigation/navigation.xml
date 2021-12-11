@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/racesFragment">
+
+    <fragment
+        android:id="@+id/weightsFragment"
+        android:name="com.example.supfitness.fragments.WeightsFragment"
+        android:label="Weights"
+        tools:layout="@layout/fragment_weights" />
+    <fragment
+        android:id="@+id/curveFragment"
+        android:name="com.example.supfitness.fragments.CurveFragment"
+        android:label="Curve"
+        tools:layout="@layout/fragment_curve" />
+    <fragment
+        android:id="@+id/racesFragment"
+        android:name="com.example.supfitness.fragments.RacesFragment"
+        android:label="Races"
+        tools:layout="@layout/fragment_races" />
+</navigation>
