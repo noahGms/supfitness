@@ -38,10 +38,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     }
 
     @SuppressLint("Range")
-    fun getWeights(): ArrayList<ItemsViewModel> {
+    fun getWeights(direction: String): ArrayList<ItemsViewModel> {
         val db = this.readableDatabase
 
-        val c = db.rawQuery("SELECT * FROM " + TABLE_WEIGHTS_NAME + " ORDER BY "+ WEIGHTS_ID_COL + " DESC", null)
+        val c = db.rawQuery("SELECT * FROM " + TABLE_WEIGHTS_NAME + " ORDER BY "+ WEIGHTS_ID_COL + " " + direction, null)
 
         val data = ArrayList<ItemsViewModel>()
         if (c.moveToFirst()) {
@@ -71,7 +71,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     private fun getDateTime(): String? {
         val dateFormat = SimpleDateFormat(
-            "yyyy-MM-dd HH:mm:ss", Locale.getDefault()
+            "yyyy-MM-dd", Locale.getDefault() // default yyyy-MM-dd HH:mm:ss
         )
         val date = Date()
         return dateFormat.format(date)

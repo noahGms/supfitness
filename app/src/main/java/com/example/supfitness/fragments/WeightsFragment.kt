@@ -66,7 +66,7 @@ class WeightsFragment : Fragment() {
         recyclerview.layoutManager = LinearLayoutManager(activity)
 
         val db = activity?.let { DBHelper(it, null) }
-        val data = db?.getWeights()
+        val data = db?.getWeights("DESC")
 
         val adapter = data?.let { WeightsAdapter(it) { position -> onDeleteButtonClick(position, view) } }
 
