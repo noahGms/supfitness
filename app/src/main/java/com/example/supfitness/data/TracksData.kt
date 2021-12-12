@@ -4,7 +4,7 @@ data class TracksData(
     val id: Int,
     val longitude: String,
     val latitude: String,
-    val rate: String,
+    val speed: String,
     val date: String
 ) {
 }

@@ -91,27 +91,29 @@ class MainActivity : AppCompatActivity() {
                 ) == PackageManager.PERMISSION_GRANTED
             ) {
                 if (isGPSEnabled()) {
-                    LocationServices.getFusedLocationProviderClient(this@MainActivity)
-                        .requestLocationUpdates(locationRequest, object : LocationCallback() {
-                            override fun onLocationResult(locationResult: LocationResult) {
-                                super.onLocationResult(locationResult)
-                                LocationServices.getFusedLocationProviderClient(this@MainActivity)
-                                    .removeLocationUpdates(this)
-                                if (locationResult.locations.size > 0) {
-                                    val index = locationResult.locations.size - 1
-                                    val latitude = locationResult.locations[index].latitude
-                                    val longitude = locationResult.locations[index].longitude
-                                    val rate = locationResult.locations[index].speed
+                    locationRequest?.let {
+                        LocationServices.getFusedLocationProviderClient(this@MainActivity)
+                            .requestLocationUpdates(it, object : LocationCallback() {
+                                override fun onLocationResult(locationResult: LocationResult) {
+                                    super.onLocationResult(locationResult)
+                                    LocationServices.getFusedLocationProviderClient(this@MainActivity)
+                                        .removeLocationUpdates(this)
+                                    if (locationResult.locations.size > 0) {
+                                        val index = locationResult.locations.size - 1
+                                        val latitude = locationResult.locations[index].latitude
+                                        val longitude = locationResult.locations[index].longitude
+                                        val speed = locationResult.locations[index].speed
 
-                                    val db = DBHelper(this@MainActivity, null)
-                                    db.addTrack(
-                                        longitude.toString(),
-                                        latitude.toString(),
-                                        rate.toString()
-                                    )
+                                        val db = DBHelper(this@MainActivity, null)
+                                        db.addTrack(
+                                            longitude.toString(),
+                                            latitude.toString(),
+                                            speed.toString()
+                                        )
+                                    }
                                 }
-                            }
-                        }, Looper.getMainLooper())
+                            }, Looper.getMainLooper())
+                    }
                 } else {
                     turnOnGPS()
                 }
@@ -122,13 +124,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun turnOnGPS() {
-        val builder = LocationSettingsRequest.Builder()
-            .addLocationRequest(locationRequest)
-        builder.setAlwaysShow(true)
-        val result: Task<LocationSettingsResponse> = LocationServices.getSettingsClient(
-            applicationContext
-        )
-            .checkLocationSettings(builder.build())
+        val builder = locationRequest?.let {
+            LocationSettingsRequest.Builder()
+                .addLocationRequest(it)
+        }
+        builder?.setAlwaysShow(true)
+        val result: Task<LocationSettingsResponse> = builder?.let {
+            LocationServices.getSettingsClient(
+                applicationContext
+            )
+                .checkLocationSettings(it.build())
+        } as Task<LocationSettingsResponse>
         result.addOnCompleteListener(OnCompleteListener<LocationSettingsResponse?> { task ->
             try {
                 val response = task.getResult(ApiException::class.java)

@@ -23,7 +23,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                 + TRACKS_ID_COL + " INTEGER PRIMARY KEY, " +
                 TRACKS_LATITUDE_COL + " TEXT," +
                 TRACKS_LONGITUDE_COL + " TEXT," +
-                TRACKS_RATE_COL + " TEXT," +
+                TRACKS_SPEED_COL + " TEXT," +
                 TRACKS_DATE_COL + " TEXT" + ")")
 
         db.execSQL(weightsQuery)
@@ -36,7 +36,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         onCreate(db)
     }
 
-    fun addTrack(longitude: String, latitude: String, rate: String) {
+    fun addTrack(longitude: String, latitude: String, speed: String) {
         val values = ContentValues()
         val data = getLastTrack()
 
@@ -50,7 +50,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         values.put(TRACKS_LATITUDE_COL, latitude)
         values.put(TRACKS_LONGITUDE_COL, longitude)
-        values.put(TRACKS_RATE_COL, rate)
+        values.put(TRACKS_SPEED_COL, speed)
         values.put(TRACKS_DATE_COL, getDateTime())
 
         val db = this.writableDatabase
@@ -75,7 +75,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                         c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
                         c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
                         c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
-                        c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_SPEED_COL)),
                         c.getString(c.getColumnIndex(TRACKS_DATE_COL))
                     )
                 )
@@ -102,7 +102,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
                         c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
                         c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
                         c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
-                        c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_SPEED_COL)),
                         c.getString(c.getColumnIndex(TRACKS_DATE_COL))
                     )
                 )
@@ -180,7 +180,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val TRACKS_ID_COL = "id"
         val TRACKS_LONGITUDE_COL = "longitude"
         val TRACKS_LATITUDE_COL = "latitude"
-        val TRACKS_RATE_COL = "rate"
+        val TRACKS_SPEED_COL = "speed"
         val TRACKS_DATE_COL = "date"
     }
 }
