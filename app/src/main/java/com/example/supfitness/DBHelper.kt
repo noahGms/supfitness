@@ -61,9 +61,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val db = this.readableDatabase
         var idStr:String = id.toString()
 
-        Log.i("test", idStr)
-
-        db.delete(TABLE_WEIGHTS_NAME, WEIGHTS_ID_COL, arrayOf(idStr))
+        db.delete(TABLE_WEIGHTS_NAME, WEIGHTS_ID_COL + " =?", arrayOf(idStr))
     }
 
     fun closeDB() {

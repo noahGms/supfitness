@@ -2,6 +2,7 @@ package com.example.supfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -67,8 +68,15 @@ class WeightsFragment : Fragment() {
         val db = activity?.let { DBHelper(it, null) }
         val data = db?.getWeights()
 
-        val adapter = data?.let { WeightsAdapter(it) }
+        val adapter = data?.let { WeightsAdapter(it) { position -> onDeleteButtonClick(position, view) } }
 
         recyclerview.adapter = adapter
+    }
+    fun onDeleteButtonClick(id: Int, view: View) {
+        val db = activity?.let { DBHelper(requireActivity(), null) }
+        db?.deleteWeight(id)
+        Snackbar.make(view, "Weight deleted", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+        handleRecyclerView(view)
     }
 }

@@ -1,13 +1,15 @@
 package com.example.supfitness
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.supfitness.fragments.WeightsFragment
 
-class WeightsAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
+class WeightsAdapter(private val mList: List<ItemsViewModel>, private val onDeleteButtonClick: (id: Int) -> Unit) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,6 +32,7 @@ class WeightsAdapter(private val mList: List<ItemsViewModel>) : RecyclerView.Ada
 
         holder.deleteButton.setOnClickListener {
             // delete weight
+            onDeleteButtonClick(ItemsViewModel.id)
         }
 
     }
