@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.supfitness.DBHelper
-import com.example.supfitness.ItemsViewModel
+import com.example.supfitness.data.WeightsData
 import com.example.supfitness.R
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
@@ -20,7 +20,7 @@ import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 
 class CurveFragment : Fragment() {
     private lateinit var lineChart: LineChart
-    private var weightList = ArrayList<ItemsViewModel>()
+    private var weightList = ArrayList<WeightsData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -85,12 +85,12 @@ class CurveFragment : Fragment() {
         lineChart.invalidate()
     }
 
-    private fun getWeightList(): ArrayList<ItemsViewModel> {
+    private fun getWeightList(): ArrayList<WeightsData> {
         val db = activity?.let { DBHelper(it, null) }
         val data = db?.getWeights("ASC")
 
         data?.map{weight ->
-            weightList.add(ItemsViewModel(weight.id, weight.weight, weight.date))
+            weightList.add(WeightsData(weight.id, weight.weight, weight.date))
         }
 
         return weightList

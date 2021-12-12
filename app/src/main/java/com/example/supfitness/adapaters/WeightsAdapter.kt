@@ -1,15 +1,15 @@
-package com.example.supfitness
+package com.example.supfitness.adapaters
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.supfitness.fragments.WeightsFragment
+import com.example.supfitness.R
+import com.example.supfitness.data.WeightsData
 
-class WeightsAdapter(private val mList: List<ItemsViewModel>, private val onDeleteButtonClick: (id: Int) -> Unit) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
+class WeightsAdapter(private val mList: List<WeightsData>, private val onDeleteButtonClick: (id: Int) -> Unit) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
