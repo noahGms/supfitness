@@ -9,7 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.supfitness.R
 import com.example.supfitness.data.WeightsData
 
-class WeightsAdapter(private val mList: List<WeightsData>, private val onDeleteButtonClick: (id: Int) -> Unit) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
+class WeightsAdapter(
+    private val mList: List<WeightsData>,
+    private val onDeleteButtonClick: (id: Int) -> Unit
+) : RecyclerView.Adapter<WeightsAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -5,8 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import com.example.supfitness.data.WeightsData
 import com.example.supfitness.data.TracksData
+import com.example.supfitness.data.WeightsData
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -21,7 +21,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         val tracksQuery = ("CREATE TABLE " + TABLE_TRACKS_NAME + " ("
                 + TRACKS_ID_COL + " INTEGER PRIMARY KEY, " +
-                 TRACKS_LATITUDE_COL + " TEXT," +
+                TRACKS_LATITUDE_COL + " TEXT," +
                 TRACKS_LONGITUDE_COL + " TEXT," +
                 TRACKS_RATE_COL + " TEXT," +
                 TRACKS_DATE_COL + " TEXT" + ")")
@@ -62,19 +62,22 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getLastTrack(): ArrayList<TracksData> {
         val db = this.readableDatabase
 
-        val c = db.rawQuery("SELECT * FROM " + TABLE_TRACKS_NAME + " ORDER BY "+ TRACKS_ID_COL + " DESC" + " LIMIT 1", null)
+        val c = db.rawQuery(
+            "SELECT * FROM " + TABLE_TRACKS_NAME + " ORDER BY " + TRACKS_ID_COL + " DESC" + " LIMIT 1",
+            null
+        )
 
         val data = ArrayList<TracksData>()
         if (c.moveToFirst()) {
             do {
                 data.add(
                     TracksData(
-                    c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_DATE_COL))
-                )
+                        c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_DATE_COL))
+                    )
                 )
             } while (c.moveToNext())
         }
@@ -86,19 +89,22 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getTracks(): ArrayList<TracksData> {
         val db = this.readableDatabase
 
-        val c = db.rawQuery("SELECT * FROM " + TABLE_TRACKS_NAME + " ORDER BY "+ TRACKS_ID_COL + " DESC", null)
+        val c = db.rawQuery(
+            "SELECT * FROM " + TABLE_TRACKS_NAME + " ORDER BY " + TRACKS_ID_COL + " DESC",
+            null
+        )
 
         val data = ArrayList<TracksData>()
         if (c.moveToFirst()) {
             do {
                 data.add(
                     TracksData(
-                    c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
-                    c.getString(c.getColumnIndex(TRACKS_DATE_COL))
-                )
+                        c.getInt(c.getColumnIndex(TRACKS_ID_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_LONGITUDE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_LATITUDE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_RATE_COL)),
+                        c.getString(c.getColumnIndex(TRACKS_DATE_COL))
+                    )
                 )
             } while (c.moveToNext())
         }
@@ -121,17 +127,20 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
     fun getWeights(direction: String): ArrayList<WeightsData> {
         val db = this.readableDatabase
 
-        val c = db.rawQuery("SELECT * FROM " + TABLE_WEIGHTS_NAME + " ORDER BY "+ WEIGHTS_ID_COL + " " + direction, null)
+        val c = db.rawQuery(
+            "SELECT * FROM " + TABLE_WEIGHTS_NAME + " ORDER BY " + WEIGHTS_ID_COL + " " + direction,
+            null
+        )
 
         val data = ArrayList<WeightsData>()
         if (c.moveToFirst()) {
             do {
                 data.add(
                     WeightsData(
-                    c.getInt(c.getColumnIndex(WEIGHTS_ID_COL)),
-                    c.getString(c.getColumnIndex(WEIGHTS_WEIGHT_COl)),
-                    c.getString(c.getColumnIndex(WEIGHTS_DATE_COL))
-                )
+                        c.getInt(c.getColumnIndex(WEIGHTS_ID_COL)),
+                        c.getString(c.getColumnIndex(WEIGHTS_WEIGHT_COl)),
+                        c.getString(c.getColumnIndex(WEIGHTS_DATE_COL))
+                    )
                 )
             } while (c.moveToNext())
         }
@@ -141,7 +150,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     fun deleteWeight(id: Int) {
         val db = this.readableDatabase
-        var idStr:String = id.toString()
+        var idStr: String = id.toString()
 
         db.delete(TABLE_WEIGHTS_NAME, WEIGHTS_ID_COL + " =?", arrayOf(idStr))
     }

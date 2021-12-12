@@ -1,48 +1,28 @@
 package com.example.supfitness
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
+import android.widget.Toast
+import androidx.annotation.Nullable
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.gms.location.LocationRequest
-import android.location.LocationManager
-
-import com.google.android.gms.location.LocationSettingsStatusCodes
-
-import com.google.android.gms.common.api.ResolvableApiException
-
 import com.google.android.gms.common.api.ApiException
-
-import android.widget.Toast
-
-import com.google.android.gms.location.LocationSettingsResponse
-
+import com.google.android.gms.common.api.ResolvableApiException
+import com.google.android.gms.location.*
 import com.google.android.gms.tasks.OnCompleteListener
-
-import com.google.android.gms.location.LocationServices
-
-import com.google.android.gms.location.LocationSettingsRequest
-
-import android.os.Looper
-
-import com.google.android.gms.location.LocationResult
-
-import com.google.android.gms.location.LocationCallback
-
-import android.os.Build
-
-import android.content.Context
-
-import android.content.Intent
-import android.content.IntentSender.SendIntentException
-import androidx.annotation.Nullable
 import com.google.android.gms.tasks.Task
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
@@ -55,17 +35,18 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         val navController = findNavController(R.id.fragmentContainer)
 
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.weightsFragment, R.id.curveFragment, R.id.racesFragment))
+        val appBarConfiguration =
+            AppBarConfiguration(setOf(R.id.weightsFragment, R.id.curveFragment, R.id.racesFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         bottomNavigationView.setupWithNavController(navController)
     }
 
     override fun onStart() {
-        locationRequest = LocationRequest.create();
-        locationRequest?.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        locationRequest?.setInterval(5000);
-        locationRequest?.setFastestInterval(2000);
+        locationRequest = LocationRequest.create()
+        locationRequest?.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest?.interval = 5000
+        locationRequest?.fastestInterval = 2000
 
         getCurrentLocation()
         super.onStart()
@@ -123,7 +104,11 @@ class MainActivity : AppCompatActivity() {
                                     val rate = locationResult.locations[index].speed
 
                                     val db = DBHelper(this@MainActivity, null)
-                                    db.addTrack(longitude.toString(), latitude.toString(), rate.toString())
+                                    db.addTrack(
+                                        longitude.toString(),
+                                        latitude.toString(),
+                                        rate.toString()
+                                    )
                                 }
                             }
                         }, Looper.getMainLooper())

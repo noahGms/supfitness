@@ -2,12 +2,12 @@ package com.example.supfitness.fragments
 
 import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.supfitness.DBHelper
@@ -67,10 +67,12 @@ class WeightsFragment : Fragment() {
         val db = activity?.let { DBHelper(it, null) }
         val data = db?.getWeights("DESC")
 
-        val adapter = data?.let { WeightsAdapter(it) { position -> onDeleteButtonClick(position, view) } }
+        val adapter =
+            data?.let { WeightsAdapter(it) { position -> onDeleteButtonClick(position, view) } }
 
         recyclerview.adapter = adapter
     }
+
     fun onDeleteButtonClick(id: Int, view: View) {
         val db = activity?.let { DBHelper(requireActivity(), null) }
         db?.deleteWeight(id)

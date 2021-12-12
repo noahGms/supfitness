@@ -2,13 +2,13 @@ package com.example.supfitness.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.example.supfitness.DBHelper
-import com.example.supfitness.data.WeightsData
 import com.example.supfitness.R
+import com.example.supfitness.data.WeightsData
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
@@ -89,7 +89,7 @@ class CurveFragment : Fragment() {
         val db = activity?.let { DBHelper(it, null) }
         val data = db?.getWeights("ASC")
 
-        data?.map{weight ->
+        data?.map { weight ->
             weightList.add(WeightsData(weight.id, weight.weight, weight.date))
         }
 
