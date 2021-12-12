@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">supfitness</string>
+    <string name="add_weight_button_description">add weight button</string>
 </resources>

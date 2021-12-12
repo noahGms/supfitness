@@ -1,60 +1,52 @@
 package com.example.supfitness.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import com.example.supfitness.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [WeightsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class WeightsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_weights, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WeightsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WeightsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val button = view.findViewById<FloatingActionButton>(R.id.addWeightButton)
+        button.setOnClickListener {
+            handleDialog(view)
+        }
+    }
+
+    private fun handleDialog(view: View) {
+        val dialogView = layoutInflater.inflate(R.layout.new_weight, null)
+        val dialogBuilder = AlertDialog.Builder(activity)
+            .setView(dialogView)
+            .setTitle("Add current weight")
+        val dialog = dialogBuilder.show()
+
+        val cancelButton = dialog.findViewById<Button>(R.id.new_weight_cancel_button)
+        val confirmButton = dialog.findViewById<Button>(R.id.new_weight_confirm_button)
+        cancelButton.setOnClickListener {
+            dialog.dismiss()
+        }
+        confirmButton.setOnClickListener {
+            var weightInput = dialog.findViewById<EditText>(R.id.new_weight_number_input)
+
+            Snackbar.make(view, "New current weight added", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+            dialog.dismiss()
+        }
     }
 }
